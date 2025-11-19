@@ -16,7 +16,7 @@ export default function PhotoUploadInput({ onPhotoChange }: PhotoUploadInputProp
   return (
     <div className="inner">
       <header className="major">
-        <h2>Upload Foot Photo</h2>
+        <h2>Upload Photo</h2>
       </header>
       <p>Upload a clear photo of your foot for automatic size detection</p>
       <div style={{ marginTop: '2em' }}>

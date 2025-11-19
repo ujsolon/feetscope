@@ -32,7 +32,7 @@ export default function PhotoUploadTile({ onPhotoChange, photo }: PhotoUploadTil
           </span>
           <header className="major">
             <h3>Aliquam</h3>
-            <p>Upload foot photo</p>
+            <p>Upload photo</p>
           </header>
           <button 
             onClick={handleButtonClick}

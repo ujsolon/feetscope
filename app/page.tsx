@@ -42,18 +42,9 @@ export default function Home() {
               <li>
                 <button 
                   onClick={handleUploadClick}
-                  style={{
-                    padding: '0.75em 2em',
-                    backgroundColor: '#007bff',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontSize: '1em',
-                    marginRight: '1em'
-                  }}
+                  className="button next"
                 >
-                  {photo ? `✓ Photo Uploaded: ${photo.name}` : 'Upload Foot Photo'}
+                  {photo ? `✓ Photo Uploaded: ${photo.name}` : 'Upload Photo'}
                 </button>
                 <input
                   ref={fileInputRef}
@@ -63,7 +54,6 @@ export default function Home() {
                   style={{ display: 'none' }}
                 />
               </li>
-              <li><a href="#one" className="button next scrolly">Get Started</a></li>
             </ul>
           </div>
         </div>
