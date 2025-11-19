@@ -14,7 +14,7 @@ export default function HeelExperienceTile({ onTileClick, experience }: HeelExpe
       </span>
       <header className="major">
         <h3>Been wearing them since</h3>
-        <p>{experience ? `✓ ${experience}` : 'Heel wearing experience'}</p>
+        <p>{experience ? `✓ ${experience}` : 'Heels Experience'}</p>
       </header>
     </article>
   );

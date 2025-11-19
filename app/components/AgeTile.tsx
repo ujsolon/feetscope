@@ -13,7 +13,7 @@ export default function AgeTile({ onTileClick, age }: AgeTileProps) {
       </span>
       <header className="major">
         <h3>With each year, more elegant</h3>
-        <p>{age ? `✓ Age ${new Date().getFullYear() - parseInt(age)}` : 'Enter your birth year'}</p>
+        <p>{age ? `✓ Age ${new Date().getFullYear() - parseInt(age)}` : 'Choose your birth year'}</p>
       </header>
     </article>
   );

@@ -6,11 +6,13 @@ interface WearTimeTileProps {
 }
 
 export default function WearTimeTile({ onTileClick, wearTime }: WearTimeTileProps) {
-  const wearTimeLabels: { [key: string]: string } = {
-    'under-2': 'Under 2 hours',
-    '2-4': '2-4 hours',
-    '4-6': '4-6 hours',
-    'over-6': 'Over 6 hours'
+  const getHeader = () => {
+    if (!wearTime) return 'How often are they on my feet?';
+    const hours = parseInt(wearTime);
+    if (hours > 8) return 'I can wear them all day';
+    if (hours > 4) return 'Cuties for work';
+    if (hours > 2) return 'For parties';
+    return 'I am being forced to do this, help';
   };
 
   return (
@@ -19,8 +21,8 @@ export default function WearTimeTile({ onTileClick, wearTime }: WearTimeTileProp
         <img src="/html5up-forty/images/pic04.jpg" alt="" />
       </span>
       <header className="major">
-        <h3>Ipsum</h3>
-        <p>{wearTime ? `✓ ${wearTimeLabels[wearTime]}` : 'Expected wear time'}</p>
+        <h3>{getHeader()}</h3>
+        <p>{wearTime ? `✓ ${wearTime}h per day` : 'Expected wear time'}</p>
       </header>
     </article>
   );

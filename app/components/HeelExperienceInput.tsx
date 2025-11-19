@@ -14,7 +14,7 @@ export default function HeelExperienceInput({ onExperienceChange }: HeelExperien
   return (
     <div className="inner">
       <header className="major">
-        <h2>Heel Wearing Experience</h2>
+        <h2>Heels Experience</h2>
       </header>
       <p>Since when have you been wearing heels?</p>
       <div style={{ marginTop: '2em' }}>

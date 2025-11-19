@@ -60,7 +60,7 @@ export default function HeelExperienceModal({
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 style={{ color: '#242943', marginBottom: '0.5em' }}>Heel Wearing Experience</h2>
+        <h2 style={{ color: '#242943', marginBottom: '0.5em' }}>Heels Experience</h2>
         <p style={{ color: '#555', marginBottom: '1.5em' }}>When did you start wearing heels?</p>
         
         <div style={{ marginBottom: '1.5em' }}>
