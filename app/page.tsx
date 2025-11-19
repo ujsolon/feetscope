@@ -4,12 +4,18 @@ import { useState, useRef } from 'react';
 import HeelExperienceTile from './components/HeelExperienceTile';
 import AgeTile from './components/AgeTile';
 import WearTimeTile from './components/WearTimeTile';
+import HeelExperienceModal from './components/HeelExperienceModal';
+import AgeModal from './components/AgeModal';
+import WearTimeModal from './components/WearTimeModal';
 
 export default function Home() {
   const [photo, setPhoto] = useState<File | null>(null);
   const [heelExperience, setHeelExperience] = useState<string>('');
   const [age, setAge] = useState<string>('');
   const [wearTime, setWearTime] = useState<string>('');
+  const [heelExperienceModalOpen, setHeelExperienceModalOpen] = useState(false);
+  const [ageModalOpen, setAgeModalOpen] = useState(false);
+  const [wearTimeModalOpen, setWearTimeModalOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUploadClick = () => {
@@ -89,9 +95,9 @@ export default function Home() {
 
         {/* One */}
         <section id="one" className="tiles">
-          <HeelExperienceTile onExperienceChange={setHeelExperience} experience={heelExperience} />
-          <AgeTile onAgeChange={setAge} age={age} />
-          <WearTimeTile onWearTimeChange={setWearTime} wearTime={wearTime} />
+          <HeelExperienceTile onTileClick={() => setHeelExperienceModalOpen(true)} experience={heelExperience} />
+          <AgeTile onTileClick={() => setAgeModalOpen(true)} age={age} />
+          <WearTimeTile onTileClick={() => setWearTimeModalOpen(true)} wearTime={wearTime} />
           <article>
             <span className="image">
               <img src="/html5up-forty/images/pic05.jpg" alt="" />
@@ -183,6 +189,26 @@ export default function Home() {
           </ul>
         </div>
       </footer>
+
+      {/* Modals */}
+      <HeelExperienceModal
+        isOpen={heelExperienceModalOpen}
+        onClose={() => setHeelExperienceModalOpen(false)}
+        onExperienceChange={setHeelExperience}
+        experience={heelExperience}
+      />
+      <AgeModal
+        isOpen={ageModalOpen}
+        onClose={() => setAgeModalOpen(false)}
+        onAgeChange={setAge}
+        age={age}
+      />
+      <WearTimeModal
+        isOpen={wearTimeModalOpen}
+        onClose={() => setWearTimeModalOpen(false)}
+        onWearTimeChange={setWearTime}
+        wearTime={wearTime}
+      />
 
     </div>
   );
