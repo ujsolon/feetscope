@@ -23,6 +23,31 @@ export default function Home() {
   };
   return (
     <div id="wrapper">
+      <style>{`
+        @keyframes heelsColorShimmer {
+          0% {
+            color: #ff69b4;
+          }
+          25% {
+            color: #ff1493;
+          }
+          50% {
+            color: #ffb6d9;
+          }
+          75% {
+            color: #ff1493;
+          }
+          100% {
+            color: #ff69b4;
+          }
+        }
+        .heels-shimmer {
+          color: #ff69b4;
+          font-style: italic;
+          font-weight: bold;
+          animation: heelsColorShimmer 3s ease-in-out infinite;
+        }
+      `}</style>
 
       {/* Header */}
       <header id="header" className="alt">
@@ -33,18 +58,18 @@ export default function Home() {
       <section id="banner" className="major">
         <div className="inner">
           <header className="major">
-            <h1>Hi, my name is Forty</h1>
+            <h1>Hi, I heard you sell <span className="heels-shimmer">heels</span></h1>
           </header>
           <div className="content">
-            <p>A responsive site template designed by HTML5 UP<br />
-            Upload a photo of your foot to get started, or fill in the measurements below.</p>
+            <p>Upload feet pics and get matches.<br />
+            </p>
             <ul className="actions">
               <li>
                 <button 
                   onClick={handleUploadClick}
                   className="button next"
                 >
-                  {photo ? `✓ Photo Uploaded: ${photo.name}` : 'Upload Photo'}
+                  {photo ? `✓ Photo Uploaded` : 'Upload Photo'}
                 </button>
                 <input
                   ref={fileInputRef}
