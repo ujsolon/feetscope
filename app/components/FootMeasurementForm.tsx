@@ -18,12 +18,53 @@ export default function FootMeasurementForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // At least one field must be filled
-    if (footLength || age || heelExperience) {
+    
+    // If foot picture is provided, send to Alibaba Cloud for analysis
+    if (footPicture) {
+      analyzeFootImage(footPicture);
+    }
+    
+    // Show results based on provided data
+    if (footLength || age || heelExperience || footPicture) {
       setShowResults(true);
     } else {
-      alert('Please fill in at least one field');
+      alert('Please provide at least one input');
     }
+  };
+
+  const analyzeFootImage = async (file: File) => {
+    // This is where you would integrate with Alibaba Cloud Image Analysis API
+    // Example implementation (you'll need to replace with actual API details):
+    
+    /*
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+      const response = await fetch('https://dashscope-intl.aliyuncs.com/compatible-mode/v1', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer API_KEY',
+        //   'Content-Type': 'multipart/form-data',
+        },
+        body: formData
+      });
+      
+      const data = await response.json();
+      
+      // Extract foot length from response
+      if (data.footLength) {
+        setFootLength(data.footLength.toString());
+      }
+      
+    } catch (error) {
+      console.error('Error analyzing foot image:', error);
+      alert('Failed to analyze foot image. Please try again.');
+    }
+    */
+    
+    // For now, we'll simulate the response
+    console.log('Foot image would be sent to Alibaba Cloud for analysis');
   };
 
   if (showResults) {
@@ -32,6 +73,7 @@ export default function FootMeasurementForm() {
         footLength={footLength}
         age={age}
         heelExperience={heelExperience}
+        footPicture={footPicture}
       />
     );
   }
@@ -52,7 +94,7 @@ export default function FootMeasurementForm() {
             onChange={handleFootPictureChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
-          <p className="mt-1 text-sm text-gray-500">Upload a clear photo of your foot</p>
+          <p className="mt-1 text-sm text-gray-500">Upload a clear photo of your foot for automatic size detection</p>
         </div>
 
         {/* Foot Length Reference */}

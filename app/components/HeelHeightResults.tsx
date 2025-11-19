@@ -10,7 +10,7 @@ interface Product {
   imageUrl: string;
 }
 
-export default function HeelHeightResults({ footLength, age, heelExperience }: { footLength: string; age: string; heelExperience: string }) {
+export default function HeelHeightResults({ footLength, age, heelExperience, footPicture }: { footLength: string; age: string; heelExperience: string; footPicture?: File }) {
   // Calculate safe heel height based on inputs
   const calculateSafeHeelHeight = () => {
     let baseHeight = 5.0; // Default height if no inputs provided
@@ -111,6 +111,11 @@ export default function HeelHeightResults({ footLength, age, heelExperience }: {
           {heelExperience && `, Experience: ${heelExperience}`}
           {!footLength && !age && !heelExperience && 'Using default values'}
         </p>
+        {footPicture && (
+          <p className="text-center text-xs text-gray-500 mt-2">
+            Foot length determined from uploaded image
+          </p>
+        )}
       </div>
       
       {/* Product Recommendations */}

@@ -9,7 +9,7 @@ export default function Home() {
           <div className="flex flex-col items-center mb-12">
             <Image
               className="dark:invert mb-6"
-              src="/next.svg"
+              src="/feetscope.jpg"
               alt="Next.js logo"
               width={100}
               height={20}
