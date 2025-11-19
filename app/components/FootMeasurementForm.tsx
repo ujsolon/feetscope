@@ -33,38 +33,32 @@ export default function FootMeasurementForm() {
   };
 
   const analyzeFootImage = async (file: File) => {
-    // This is where you would integrate with Alibaba Cloud Image Analysis API
-    // Example implementation (you'll need to replace with actual API details):
-    
-    /*
+    // Send image to FastAPI backend for analysis
     const formData = new FormData();
     formData.append('image', file);
     
     try {
-      const response = await fetch('https://dashscope-intl.aliyuncs.com/compatible-mode/v1', {
+      const response = await fetch('http://localhost:8000/analyze-foot-image', {
         method: 'POST',
-        headers: {
-          'Authorization': 'Bearer API_KEY',
-        //   'Content-Type': 'multipart/form-data',
-        },
         body: formData
       });
+      
+      if (!response.ok) {
+        throw new Error(`Server responded with status ${response.status}`);
+      }
       
       const data = await response.json();
       
       // Extract foot length from response
-      if (data.footLength) {
-        setFootLength(data.footLength.toString());
+      if (data.foot_length_cm) {
+        setFootLength(data.foot_length_cm.toString());
       }
       
+      console.log('Foot analysis result:', data);
     } catch (error) {
       console.error('Error analyzing foot image:', error);
       alert('Failed to analyze foot image. Please try again.');
     }
-    */
-    
-    // For now, we'll simulate the response
-    console.log('Foot image would be sent to Alibaba Cloud for analysis');
   };
 
   if (showResults) {

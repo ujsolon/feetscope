@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 import base64
 import json
 from openai import OpenAI
@@ -7,6 +8,15 @@ import dotenv, os
 dotenv.load_dotenv()
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://localhost:3001"],  # Add both ports in case Next.js uses 3001
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 client = OpenAI(
     api_key=os.getenv("DASHSCOPE_API_KEY"),
@@ -33,7 +43,7 @@ async def analyze_foot_image(image: UploadFile = File(...)):
                     "Definitions:\n"
                     "- is_foot: true if the picture predominantly contains a foot or feet.\n"
                     "- is_clear: true if the foot is clear enough to estimate size.\n"
-                    "- foot_size: provide approximate foot size only if both is_foot and is_clear are true; otherwise null.\n"
+                    "- foot_size: provide approximate foot size in cm, only if both is_foot and is_clear are true, Use conversions if necessary. If previous conditions are not met, return null.\n"
                     "Respond ONLY with JSON."
                 )
             },
