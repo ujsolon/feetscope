@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 interface AgeModalProps {
   isOpen: boolean;
@@ -15,19 +15,40 @@ export default function AgeModal({
   onAgeChange,
   age
 }: AgeModalProps) {
+  const [inputValue, setInputValue] = useState(age);
   const currentYear = new Date().getFullYear();
   const minYear = currentYear - 100;
   const birthYear = age ? parseInt(age) : currentYear;
   const calculatedAge = currentYear - birthYear;
 
   const handleSliderChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onAgeChange(e.target.value);
+    const value = e.target.value;
+    onAgeChange(value);
+    setInputValue(value);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
+    const value = e.target.value;
+    setInputValue(value);
+  };
+
+  const handleInputBlur = () => {
+    const value = parseInt(inputValue);
     if (!isNaN(value) && value >= minYear && value <= currentYear) {
-      onAgeChange(e.target.value);
+      onAgeChange(inputValue);
+    } else {
+      setInputValue(age);
+    }
+  };
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const value = parseInt(inputValue);
+      if (!isNaN(value) && value >= minYear && value <= currentYear) {
+        onAgeChange(inputValue);
+      } else {
+        setInputValue(age);
+      }
     }
   };
 
@@ -85,8 +106,10 @@ export default function AgeModal({
             />
             <input
               type="number"
-              value={age || currentYear}
+              value={inputValue || currentYear}
               onChange={handleInputChange}
+              onBlur={handleInputBlur}
+              onKeyDown={handleInputKeyDown}
               min={minYear}
               max={currentYear}
               style={{

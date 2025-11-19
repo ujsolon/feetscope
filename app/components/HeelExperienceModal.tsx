@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 interface HeelExperienceModalProps {
   isOpen: boolean;
@@ -15,18 +15,39 @@ export default function HeelExperienceModal({
   onExperienceChange,
   experience
 }: HeelExperienceModalProps) {
+  const [inputValue, setInputValue] = useState(experience);
   const currentYear = new Date().getFullYear();
   const minYear = currentYear - 20;
   const experienceYears = experience ? parseInt(experience) : currentYear;
 
   const handleSliderChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onExperienceChange(e.target.value);
+    const value = e.target.value;
+    onExperienceChange(value);
+    setInputValue(value);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
+    const value = e.target.value;
+    setInputValue(value);
+  };
+
+  const handleInputBlur = () => {
+    const value = parseInt(inputValue);
     if (!isNaN(value) && value >= minYear && value <= currentYear) {
-      onExperienceChange(e.target.value);
+      onExperienceChange(inputValue);
+    } else {
+      setInputValue(experience);
+    }
+  };
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const value = parseInt(inputValue);
+      if (!isNaN(value) && value >= minYear && value <= currentYear) {
+        onExperienceChange(inputValue);
+      } else {
+        setInputValue(experience);
+      }
     }
   };
 
@@ -86,8 +107,10 @@ export default function HeelExperienceModal({
             />
             <input
               type="number"
-              value={experience || currentYear}
+              value={inputValue || currentYear}
               onChange={handleInputChange}
+              onBlur={handleInputBlur}
+              onKeyDown={handleInputKeyDown}
               min={minYear}
               max={currentYear}
               style={{

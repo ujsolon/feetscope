@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 interface WearTimeModalProps {
   isOpen: boolean;
@@ -15,17 +15,38 @@ export default function WearTimeModal({
   onWearTimeChange,
   wearTime
 }: WearTimeModalProps) {
-  const minHours = 0;
+  const [inputValue, setInputValue] = useState(wearTime);
+  const minHours = 1;
   const maxHours = 12;
 
   const handleSliderChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onWearTimeChange(e.target.value);
+    const value = e.target.value;
+    onWearTimeChange(value);
+    setInputValue(value);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
+    const value = e.target.value;
+    setInputValue(value);
+  };
+
+  const handleInputBlur = () => {
+    const value = parseInt(inputValue);
     if (!isNaN(value) && value >= minHours && value <= maxHours) {
-      onWearTimeChange(e.target.value);
+      onWearTimeChange(inputValue);
+    } else {
+      setInputValue(wearTime);
+    }
+  };
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const value = parseInt(inputValue);
+      if (!isNaN(value) && value >= minHours && value <= maxHours) {
+        onWearTimeChange(inputValue);
+      } else {
+        setInputValue(wearTime);
+      }
     }
   };
 
@@ -83,8 +104,10 @@ export default function WearTimeModal({
             />
             <input
               type="number"
-              value={wearTime || minHours}
+              value={inputValue || minHours}
               onChange={handleInputChange}
+              onBlur={handleInputBlur}
+              onKeyDown={handleInputKeyDown}
               min={minHours}
               max={maxHours}
               style={{
