@@ -57,7 +57,7 @@ export default function Home() {
 
       {/* Header */}
       <header id="header" className="alt">
-        <a href="index.html" className="logo"><strong>What the</strong> <span>HEEL</span></a>
+        <a href="/" className="logo"><strong>What the</strong> <span>HEEL</span></a>
       </header>
 
       {/* Banner */}
