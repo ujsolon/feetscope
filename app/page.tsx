@@ -103,8 +103,8 @@ export default function Home() {
               <img src="/html5up-forty/images/pic05.jpg" alt="" />
             </span>
             <header className="major">
-              <h3><a href="landing.html">Consequat</a></h3>
-              <p>Ipsum dolor sit amet</p>
+              <h3><a href="landing.html">Find me something</a></h3>
+              <p> </p>
             </header>
           </article>
           <article>
@@ -112,8 +112,17 @@ export default function Home() {
               <img src="/html5up-forty/images/pic06.jpg" alt="" />
             </span>
             <header className="major">
-              <h3><a href="landing.html">Etiam</a></h3>
-              <p>Feugiat amet tempus</p>
+              <h3> </h3>
+              <p> </p>
+            </header>
+          </article>
+          <article>
+            <span className="image">
+              <img src="/html5up-forty/images/pic06.jpg" alt="" />
+            </span>
+            <header className="major">
+              <h3> </h3>
+              <p> </p>
             </header>
           </article>
         </section>
