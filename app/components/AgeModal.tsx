@@ -15,8 +15,20 @@ export default function AgeModal({
   onAgeChange,
   age
 }: AgeModalProps) {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const currentYear = new Date().getFullYear();
+  const minYear = currentYear - 100;
+  const birthYear = age ? parseInt(age) : currentYear;
+  const calculatedAge = currentYear - birthYear;
+
+  const handleSliderChange = (e: ChangeEvent<HTMLInputElement>) => {
     onAgeChange(e.target.value);
+  };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value >= minYear && value <= currentYear) {
+      onAgeChange(e.target.value);
+    }
   };
 
   if (!isOpen) return null;
@@ -47,27 +59,70 @@ export default function AgeModal({
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 style={{ color: '#242943', marginBottom: '0.5em' }}>Age</h2>
-        <p style={{ color: '#555', marginBottom: '1.5em' }}>Enter your age to calculate personalized heel height recommendations</p>
-        <input
-          type="number"
-          value={age}
-          onChange={handleChange}
-          placeholder="Enter your age"
-          min="13"
-          max="100"
-          style={{
-            marginBottom: '1.5em',
-            padding: '0.75em 1em',
-            width: '100%',
-            borderRadius: '4px',
-            border: '2px solid #9bf1ff',
-            fontSize: '1em',
-            color: '#242943',
-            fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
-            boxSizing: 'border-box'
-          }}
-        />
+        <h2 style={{ color: '#242943', marginBottom: '0.5em' }}>Birth Year</h2>
+        <p style={{ color: '#555', marginBottom: '1.5em' }}>What year were you born?</p>
+        
+        <div style={{ marginBottom: '1.5em' }}>
+          <label style={{ color: '#242943', fontWeight: '600', display: 'block', marginBottom: '0.5em' }}>
+            Birth Year:
+          </label>
+          <div style={{ display: 'flex', gap: '1em', alignItems: 'center' }}>
+            <input
+              type="range"
+              min={minYear}
+              max={currentYear}
+              value={age || currentYear}
+              onChange={handleSliderChange}
+              style={{
+                flex: 1,
+                height: '8px',
+                borderRadius: '4px',
+                background: '#9bf1ff',
+                outline: 'none',
+                WebkitAppearance: 'none',
+                appearance: 'none'
+              }}
+            />
+            <input
+              type="number"
+              value={age || currentYear}
+              onChange={handleInputChange}
+              min={minYear}
+              max={currentYear}
+              style={{
+                width: '80px',
+                padding: '0.5em',
+                borderRadius: '4px',
+                border: '2px solid #9bf1ff',
+                fontSize: '1em',
+                color: '#242943',
+                fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
+                boxSizing: 'border-box',
+                textAlign: 'center'
+              }}
+            />
+          </div>
+          <style>{`
+            input[type='range']::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              appearance: none;
+              width: 20px;
+              height: 20px;
+              borderRadius: 50%;
+              background: #242943;
+              cursor: pointer;
+              boxShadow: inset 0 0 0 2px #9bf1ff;
+            }
+            input[type='range']::-moz-range-thumb {
+              width: 20px;
+              height: 20px;
+              borderRadius: 50%;
+              background: #242943;
+              cursor: pointer;
+              border: 2px solid #9bf1ff;
+            }
+          `}</style>
+        </div>
         <button
           onClick={onClose}
           className="button primary"

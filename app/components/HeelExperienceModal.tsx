@@ -15,9 +15,22 @@ export default function HeelExperienceModal({
   onExperienceChange,
   experience
 }: HeelExperienceModalProps) {
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+  const currentYear = new Date().getFullYear();
+  const minYear = currentYear - 20;
+  const experienceYears = experience ? parseInt(experience) : currentYear;
+
+  const handleSliderChange = (e: ChangeEvent<HTMLInputElement>) => {
     onExperienceChange(e.target.value);
   };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value >= minYear && value <= currentYear) {
+      onExperienceChange(e.target.value);
+    }
+  };
+
+  const yearsOfExperience = currentYear - experienceYears;
 
   if (!isOpen) return null;
 
@@ -48,28 +61,69 @@ export default function HeelExperienceModal({
         onClick={(e) => e.stopPropagation()}
       >
         <h2 style={{ color: '#242943', marginBottom: '0.5em' }}>Heel Wearing Experience</h2>
-        <p style={{ color: '#555', marginBottom: '1.5em' }}>Select your experience level with wearing heels</p>
-        <select
-          value={experience}
-          onChange={handleChange}
-          style={{
-            marginBottom: '1.5em',
-            padding: '0.75em 1em',
-            width: '100%',
-            borderRadius: '4px',
-            border: '2px solid #9bf1ff',
-            fontSize: '1em',
-            color: '#242943',
-            fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
-            boxSizing: 'border-box'
-          }}
-        >
-          <option value="">Select experience level</option>
-          <option value="beginner">Beginner (0-6 months)</option>
-          <option value="intermediate">Intermediate (6 months - 2 years)</option>
-          <option value="experienced">Experienced (2+ years)</option>
-          <option value="none">None</option>
-        </select>
+        <p style={{ color: '#555', marginBottom: '1.5em' }}>When did you start wearing heels?</p>
+        
+        <div style={{ marginBottom: '1.5em' }}>
+          <label style={{ color: '#242943', fontWeight: '600', display: 'block', marginBottom: '0.5em' }}>
+            Year Started:
+          </label>
+          <div style={{ display: 'flex', gap: '1em', alignItems: 'center' }}>
+            <input
+              type="range"
+              min={minYear}
+              max={currentYear}
+              value={experience || currentYear}
+              onChange={handleSliderChange}
+              style={{
+                flex: 1,
+                height: '8px',
+                borderRadius: '4px',
+                background: '#9bf1ff',
+                outline: 'none',
+                WebkitAppearance: 'none',
+                appearance: 'none'
+              }}
+            />
+            <input
+              type="number"
+              value={experience || currentYear}
+              onChange={handleInputChange}
+              min={minYear}
+              max={currentYear}
+              style={{
+                width: '80px',
+                padding: '0.5em',
+                borderRadius: '4px',
+                border: '2px solid #9bf1ff',
+                fontSize: '1em',
+                color: '#242943',
+                fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
+                boxSizing: 'border-box',
+                textAlign: 'center'
+              }}
+            />
+          </div>
+          <style>{`
+            input[type='range']::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              appearance: none;
+              width: 20px;
+              height: 20px;
+              borderRadius: 50%;
+              background: #242943;
+              cursor: pointer;
+              boxShadow: inset 0 0 0 2px #9bf1ff;
+            }
+            input[type='range']::-moz-range-thumb {
+              width: 20px;
+              height: 20px;
+              borderRadius: 50%;
+              background: #242943;
+              cursor: pointer;
+              border: 2px solid #9bf1ff;
+            }
+          `}</style>
+        </div>
         <button
           onClick={onClose}
           className="button primary"

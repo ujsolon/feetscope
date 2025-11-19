@@ -16,7 +16,7 @@ export default function HeelExperienceInput({ onExperienceChange }: HeelExperien
       <header className="major">
         <h2>Heel Wearing Experience</h2>
       </header>
-      <p>Select your experience level with wearing heels</p>
+      <p>Since when have you been wearing heels?</p>
       <div style={{ marginTop: '2em' }}>
         <select
           onChange={handleChange}
