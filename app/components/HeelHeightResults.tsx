@@ -13,36 +13,46 @@ interface Product {
 export default function HeelHeightResults({ footLength, age, heelExperience }: { footLength: string; age: string; heelExperience: string }) {
   // Calculate safe heel height based on inputs
   const calculateSafeHeelHeight = () => {
-    const length = parseFloat(footLength);
-    const userAge = parseInt(age);
+    let baseHeight = 5.0; // Default height if no inputs provided
     
-    // Simple algorithm for demonstration purposes
-    // In a real app, this would be more sophisticated
-    let baseHeight = length * 0.15; // Base on foot length
-    
-    // Adjust based on age
-    if (userAge > 50) {
-      baseHeight *= 0.8; // Reduce for older users
-    } else if (userAge < 25) {
-      baseHeight *= 0.9; // Slight reduction for younger users
+    // Adjust based on foot length if provided
+    if (footLength) {
+      const length = parseFloat(footLength);
+      if (!isNaN(length)) {
+        baseHeight = length * 0.15; // Base on foot length
+      }
     }
     
-    // Adjust based on experience
-    switch (heelExperience) {
-      case 'beginner':
-        baseHeight *= 0.7;
-        break;
-      case 'intermediate':
-        baseHeight *= 0.85;
-        break;
-      case 'experienced':
-        baseHeight *= 1.0;
-        break;
-      case 'none':
-        baseHeight *= 0.6;
-        break;
-      default:
-        baseHeight *= 0.7;
+    // Adjust based on age if provided
+    if (age) {
+      const userAge = parseInt(age);
+      if (!isNaN(userAge)) {
+        if (userAge > 50) {
+          baseHeight *= 0.8; // Reduce for older users
+        } else if (userAge < 25) {
+          baseHeight *= 0.9; // Slight reduction for younger users
+        }
+      }
+    }
+    
+    // Adjust based on experience if provided
+    if (heelExperience) {
+      switch (heelExperience) {
+        case 'beginner':
+          baseHeight *= 0.7;
+          break;
+        case 'intermediate':
+          baseHeight *= 0.85;
+          break;
+        case 'experienced':
+          baseHeight *= 1.0;
+          break;
+        case 'none':
+          baseHeight *= 0.6;
+          break;
+        default:
+          baseHeight *= 0.7;
+      }
     }
     
     return Math.max(1, Math.min(12, Math.round(baseHeight * 10) / 10)); // Between 1cm and 12cm
@@ -96,7 +106,10 @@ export default function HeelHeightResults({ footLength, age, heelExperience }: {
         <h3 className="text-lg font-semibold text-center mb-2">Safe Heel Height</h3>
         <div className="text-3xl font-bold text-center text-blue-600">{safeHeelHeight} cm</div>
         <p className="text-center text-sm text-gray-600 mt-2">
-          Based on your foot length of {footLength} cm, age {age}, and {heelExperience} heel experience
+          {footLength && `Foot length: ${footLength} cm`}
+          {age && `, Age: ${age}`}
+          {heelExperience && `, Experience: ${heelExperience}`}
+          {!footLength && !age && !heelExperience && 'Using default values'}
         </p>
       </div>
       

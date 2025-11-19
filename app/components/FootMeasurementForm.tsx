@@ -18,11 +18,11 @@ export default function FootMeasurementForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Validate required fields
-    if (footLength && age && heelExperience) {
+    // At least one field must be filled
+    if (footLength || age || heelExperience) {
       setShowResults(true);
     } else {
-      alert('Please fill in all required fields');
+      alert('Please fill in at least one field');
     }
   };
 
@@ -58,7 +58,7 @@ export default function FootMeasurementForm() {
         {/* Foot Length Reference */}
         <div>
           <label htmlFor="footLength" className="block text-sm font-medium text-gray-700 mb-1">
-            Foot Length (cm) *
+            Foot Length (cm)
           </label>
           <input
             type="number"
@@ -69,7 +69,6 @@ export default function FootMeasurementForm() {
             step="0.1"
             min="20"
             max="35"
-            required
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
@@ -77,7 +76,7 @@ export default function FootMeasurementForm() {
         {/* Age */}
         <div>
           <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-1">
-            Age *
+            Age
           </label>
           <input
             type="number"
@@ -87,7 +86,6 @@ export default function FootMeasurementForm() {
             placeholder="Enter your age"
             min="13"
             max="100"
-            required
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
@@ -95,13 +93,12 @@ export default function FootMeasurementForm() {
         {/* Previous Heel Experience */}
         <div>
           <label htmlFor="heelExperience" className="block text-sm font-medium text-gray-700 mb-1">
-            Previous Heel Experience *
+            Previous Heel Experience
           </label>
           <select
             id="heelExperience"
             value={heelExperience}
             onChange={(e) => setHeelExperience(e.target.value)}
-            required
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           >
             <option value="">Select your experience level</option>
