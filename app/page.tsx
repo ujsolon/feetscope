@@ -1,8 +1,26 @@
 'use client';
 
-import FootMeasurementForm from "./components/FootMeasurementForm";
+import { useState, useRef } from 'react';
+import HeelExperienceTile from './components/HeelExperienceTile';
+import AgeTile from './components/AgeTile';
+import WearTimeTile from './components/WearTimeTile';
 
 export default function Home() {
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [heelExperience, setHeelExperience] = useState<string>('');
+  const [age, setAge] = useState<string>('');
+  const [wearTime, setWearTime] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setPhoto(e.target.files[0]);
+    }
+  };
   return (
     <div id="wrapper">
 
@@ -19,8 +37,32 @@ export default function Home() {
           </header>
           <div className="content">
             <p>A responsive site template designed by HTML5 UP<br />
-            and released under the Creative Commons.</p>
+            Upload a photo of your foot to get started, or fill in the measurements below.</p>
             <ul className="actions">
+              <li>
+                <button 
+                  onClick={handleUploadClick}
+                  style={{
+                    padding: '0.75em 2em',
+                    backgroundColor: '#007bff',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontSize: '1em',
+                    marginRight: '1em'
+                  }}
+                >
+                  {photo ? `✓ Photo Uploaded: ${photo.name}` : 'Upload Foot Photo'}
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  style={{ display: 'none' }}
+                />
+              </li>
               <li><a href="#one" className="button next scrolly">Get Started</a></li>
             </ul>
           </div>
@@ -32,42 +74,9 @@ export default function Home() {
 
         {/* One */}
         <section id="one" className="tiles">
-          <article>
-            <span className="image">
-              <img src="/html5up-forty/images/pic01.jpg" alt="" />
-            </span>
-            <header className="major">
-              <h3><a href="#two">Aliquam</a></h3>
-              <p>Ipsum dolor sit amet</p>
-            </header>
-          </article>
-          <article>
-            <span className="image">
-              <img src="/html5up-forty/images/pic02.jpg" alt="" />
-            </span>
-            <header className="major">
-              <h3><a href="landing.html">Tempus</a></h3>
-              <p>feugiat amet tempus</p>
-            </header>
-          </article>
-          <article>
-            <span className="image">
-              <img src="/html5up-forty/images/pic03.jpg" alt="" />
-            </span>
-            <header className="major">
-              <h3><a href="landing.html">Magna</a></h3>
-              <p>Lorem etiam nullam</p>
-            </header>
-          </article>
-          <article>
-            <span className="image">
-              <img src="/html5up-forty/images/pic04.jpg" alt="" />
-            </span>
-            <header className="major">
-              <h3><a href="landing.html">Ipsum</a></h3>
-              <p>Nisl sed aliquam</p>
-            </header>
-          </article>
+          <HeelExperienceTile onExperienceChange={setHeelExperience} experience={heelExperience} />
+          <AgeTile onAgeChange={setAge} age={age} />
+          <WearTimeTile onWearTimeChange={setWearTime} wearTime={wearTime} />
           <article>
             <span className="image">
               <img src="/html5up-forty/images/pic05.jpg" alt="" />
@@ -88,15 +97,6 @@ export default function Home() {
           </article>
         </section>
 
-        {/* Two - Photo Upload Section */}
-        <section id="two">
-          <div className="inner">
-            <header className="major">
-              <h2>Foot Measurement</h2>
-            </header>
-            <FootMeasurementForm />
-          </div>
-        </section>
 
       </div>
 
